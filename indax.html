@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💐</title>
+<style>
+    :root {
+        --primary: #ff4f81;
+        --secondary: #ffe9b3;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffd6e7, var(--secondary));
+        font-family: 'Prompt', sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .page {
+        position: absolute;
+        width: 85%;
+        max-width: 400px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px 20px;
+        border-radius: 30px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        z-index: 100;
+        transition: transform 0.5s ease;
+    }
+
+    .active { display: flex; animation: fadeIn 0.8s ease forwards; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 { color: var(--primary); margin-bottom: 10px; font-size: 1.8rem; }
+    h2 { font-size: 1.1rem; color: #555; line-height: 1.5; }
+
+    button {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 50px;
+        background: var(--primary);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(255, 79, 129, 0.3);
+        margin-top: 15px;
+        z-index: 101;
+    }
+
+    button:hover { transform: scale(1.1); background: #ff2e67; }
+
+    .float {
+        position: fixed;
+        top: -40px;
+        font-size: 24px;
+        animation: fall linear infinite;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    @keyframes fall { to { transform: translateY(110vh); } }
+
+    .photo {
+        position: fixed;
+        width: 120px;
+        border: 6px solid white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        z-index: 50;
+        pointer-events: none;
+        animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                  floatAround 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes popUp {
+        from { opacity: 0; transform: scale(0) rotate(-25deg); }
+        to { opacity: 1; transform: scale(1) rotate(var(--r)); }
+    }
+
+    @keyframes floatAround {
+        from { transform: translate(0, 0) rotate(var(--r)); }
+        to { transform: translate(15px, 20px) rotate(calc(var(--r) + 8deg)); }
+    }
+</style>
+</head>
+<body>
+
+<audio id="click">
+    <source src="click.mp3" type="audio/mpeg">
+</audio>
+
+<!-- หน้าที่ 1 -->
+<div id="page1" class="page active">
+    <h1>Hello, You! ✨</h1>
+    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="120" style="margin:10px 0;">
+    <h2>วันนี้เป็นวันสำคัญล่ะ... <br>มีอะไรจะบอกด้วยนะ</h2>
+    <button onclick="nextPage(2)">กดดูสิ 🤍</button>
+</div>
+
+<!-- หน้าที่ 2 -->
+<div id="page2" class="page">
+    <h1>HBD TO YOU 🎂</h1>
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="150" style="margin:10px 0;">
+    <h2 id="typing-text-2"></h2>
+    <button id="btn-next-3" style="display: none;" onclick="nextPage(3)">ไปต่อกันเลย! 🚀</button>
+</div>
+
+<!-- หน้าที่ 3 -->
+<div id="page3" class="page">
+    <h1>มีความในใจอยากบอก 💌</h1>
+    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" width="140" style="margin:10px 0;">
+    <h2 id="typing-text-3"></h2>
+    <button id="btn-next-4" style="display: none;" onclick="nextPage(4)">ไปดูของขวัญ 🎁</button>
+</div>
+
+<!-- หน้าที่ 4 -->
+<div id="page4" class="page">
+    <h1>Happy Everyday 💐</h1>
+    <h2>ขอให้ยิ้มได้เยอะๆ ในทุกวันนะ <br>นี่คือของขวัญเล็กๆ จากพี่ 🤍</h2>
+    <button onclick="surprise()">กดเพิ่มความรัก! ❤️</button>
+</div>
+
+<script>
+const photos = [
+    "imgs/1.png", "imgs/2.png", "imgs/3.png", "imgs/4.png",
+    "imgs/5.png", "imgs/6.png", "imgs/7.png", "imgs/8.png",
+    "imgs/9.webp", "imgs/10.png", "imgs/11.png", "imgs/12.png", "imgs/13.png",
+    "imgs/14.png", "imgs/15.png", "imgs/16.png", "imgs/17.png"
+];
+
+const msgPage2 = "ขอให้โลกใจดีกับเธอ เหมือนที่เธอใจดีกับเรา... ขอให้มีความสุขที่สุดในโลกเลยนะ 💖";
+const msgPage3 = "ขอบคุณที่อยู่เป็นรอยยิ้มดีๆ ให้กันเสมอ ✨";
+
+function nextPage(num) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + num).classList.add('active');
+    
+    if(num === 2) {
+        startTyping("typing-text-2", msgPage2, "btn-next-3");
+    } else if(num === 3) {
+        startTyping("typing-text-3", msgPage3, "btn-next-4");
+    }
+}
+
+function startTyping(elementId, text, buttonId) {
+    let i = 0;
+    const textEl = document.getElementById(elementId);
+    textEl.innerHTML = "";
+    document.getElementById(buttonId).style.display = "none";
+
+    function type() {
+        if (i < text.length) {
+            textEl.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 60);
+        } else {
+            document.getElementById(buttonId).style.display = "block";
+        }
+    }
+    type();
+}
+
+function createItem(icon) {
+    const el = document.createElement("div");
+    el.className = "float";
+    el.innerHTML = icon;
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+}
+
+/* แก้ไขจุดนี้: สุ่มทั้งหัวใจและดอกไม้หล่นลงมา */
+setInterval(() => {
+    const icons = ["🌸", "❤️", "✨"];
+    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+    createItem(randomIcon);
+}, 600);
+
+function surprise() {
+    const audio = document.getElementById("click");
+    if (audio.paused) {
+        audio.play().catch(e => console.log("Play blocked"));
+    }
+
+    // หัวใจพุ่งกระจายตอนกดปุ่ม
+    for(let i=0; i<15; i++) {
+        setTimeout(() => createItem("❤️"), i * 100);
+    }
+
+    photos.forEach((src, index) => {
+        setTimeout(() => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.className = "photo";
+            
+            const randomTop = Math.random() * 70 + 5;
+            const randomLeft = Math.random() * 70 + 5;
+            const randomRotate = Math.random() * 40 - 20;
+
+            img.style.top = randomTop + "vh";
+            img.style.left = randomLeft + "vw";
+            img.style.setProperty('--r', randomRotate + 'deg');
+
+            document.body.appendChild(img);
+        }, index * 150);
+    });
+}
+</script>
+
+</body>
+</html>
