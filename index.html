@@ -4,139 +4,232 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday 💐</title>
+
 <style>
-    :root {
-        --primary: #ff4f81;
-        --secondary: #ffe9b3;
-    }
 
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #ffd6e7, var(--secondary));
-        font-family: 'Prompt', sans-serif;
-        text-align: center;
-        overflow: hidden;
-    }
+:root{--primary:#ff4f81;}
 
-    .page {
-        position: absolute;
-        width: 85%;
-        max-width: 400px;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 30px 20px;
-        border-radius: 30px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        z-index: 100;
-        transition: transform 0.5s ease;
-    }
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Prompt',sans-serif;
+text-align:center;
+overflow:hidden;
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#fad0c4,#ffd1ff);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+}
 
-    .active { display: flex; animation: fadeIn 0.8s ease forwards; }
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+.page{
+position:absolute;
+width:85%;
+max-width:400px;
+background:rgba(255,255,255,0.95);
+padding:30px 20px;
+border-radius:30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+display:none;
+flex-direction:column;
+align-items:center;
+z-index:100;
+animation:floatCard 5s ease-in-out infinite;
+}
 
-    h1 { color: var(--primary); margin-bottom: 10px; font-size: 1.8rem; }
-    h2 { font-size: 1.1rem; color: #555; line-height: 1.5; }
+.active{display:flex;}
 
-    button {
-        padding: 12px 28px;
-        border: none;
-        border-radius: 50px;
-        background: var(--primary);
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 5px 15px rgba(255, 79, 129, 0.3);
-        margin-top: 15px;
-        z-index: 101;
-    }
+@keyframes floatCard{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
+}
 
-    button:hover { transform: scale(1.1); background: #ff2e67; }
+h1{color:var(--primary); font-size: 1.8rem;}
+h2{color:#555; font-size: 1.1rem;}
 
-    .float {
-        position: fixed;
-        top: -40px;
-        font-size: 24px;
-        animation: fall linear infinite;
-        z-index: 1;
-        pointer-events: none;
-    }
+/* ✅ ปรับขนาดข้อความหน้าที่ 4 ให้เล็กลง */
+#page4 h1 { font-size: 1.4rem; margin-bottom: 5px; }
+#page4 h2 { font-size: 0.95rem; line-height: 1.4; }
 
-    @keyframes fall { to { transform: translateY(110vh); } }
+button{
+padding:12px 28px;
+border:none;
+border-radius:50px;
+background:var(--primary);
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 5px 15px rgba(255,79,129,.3);
+margin-top:15px;
+}
 
-    .photo {
-        position: fixed;
-        width: 120px;
-        border: 6px solid white;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        z-index: 50;
-        pointer-events: none;
-        animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                  floatAround 5s ease-in-out infinite alternate;
-    }
+button:hover{
+transform:scale(1.1);
+background:#ff2e67;
+}
 
-    @keyframes popUp {
-        from { opacity: 0; transform: scale(0) rotate(-25deg); }
-        to { opacity: 1; transform: scale(1) rotate(var(--r)); }
-    }
+.float{
+position:fixed;
+top:-40px;
+font-size:24px;
+animation:fall linear infinite;
+z-index:1;
+pointer-events:none;
+}
 
-    @keyframes floatAround {
-        from { transform: translate(0, 0) rotate(var(--r)); }
-        to { transform: translate(15px, 20px) rotate(calc(var(--r) + 8deg)); }
-    }
+@keyframes fall{
+to{transform:translateY(110vh);}
+}
+
+/* ✅ ปรับขนาดรูปภาพ .photo ให้เล็กลง (90px) เหมาะกับมือถือ */
+.photo{
+position:fixed;
+width:90px; 
+border:4px solid white;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+z-index:50;
+animation:popUp .5s forwards,
+floatAround 5s ease-in-out infinite alternate;
+}
+
+@keyframes popUp{
+from{opacity:0;transform:scale(0);}
+to{opacity:1;transform:scale(1) rotate(var(--r));}
+}
+
+@keyframes floatAround{
+from{transform:translate(0,0) rotate(var(--r));}
+to{transform:translate(15px,20px) rotate(calc(var(--r)+8deg));}
+}
+
+.sparkle{
+position:fixed;
+font-size:18px;
+pointer-events:none;
+animation:sparkle 3s linear forwards;
+z-index:0;
+}
+
+@keyframes sparkle{
+0%{opacity:0;transform:translateY(0) scale(.5);}
+20%{opacity:1;}
+100%{opacity:0;transform:translateY(-80px) scale(1.4);}
+}
+
+@keyframes flicker{
+from{transform:translateX(-50%) scale(1);}
+to{transform:translateX(-50%) scale(1.2);}
+}
+
 </style>
 </head>
+
 <body>
 
 <audio id="click">
-    <source src="click.mp3" type="audio/mpeg">
+<source src="click.mp3" type="audio/mpeg">
 </audio>
 
-<!-- หน้าที่ 1 -->
-<div id="page1" class="page active">
-    <h1>Hello, You! ✨</h1>
-    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="120" style="margin:10px 0;">
-    <h2>วันนี้เป็นวันสำคัญล่ะ... <br>มีอะไรจะบอกด้วยนะ</h2>
-    <button onclick="nextPage(2)">กดดูสิ 🤍</button>
+<!-- 🎂 CAKE PAGE -->
+<div id="cakePage" class="page active">
+<h1>Make a Wish 🎂</h1>
+<div style="position:relative;font-size:100px; margin: 10px 0;">
+🎂
+<div id="flame"
+style="
+position:absolute;
+top:-15px;
+left:50%;
+transform:translateX(-50%);
+font-size:35px;
+animation:flicker .15s infinite alternate;">
+🔥
+</div>
+</div>
+<h2>อธิษฐานแล้ว "เป่าลมใส่ไมค์"<br>เพื่อเริ่มวันพิเศษกันนะ!</h2>
+<button onclick="startMicBlow()">กดเริ่มเป่า</button>
 </div>
 
-<!-- หน้าที่ 2 -->
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+<h1>Hello, You! ✨</h1>
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="100" style="margin:10px 0;">
+<h2>วันนี้เป็นวันสำคัญล่ะ...<br>มีอะไรจะบอกด้วยนะ</h2>
+<button onclick="nextPage(2)">กดดูสิ 🤍</button>
+</div>
+
+<!-- PAGE 2 -->
 <div id="page2" class="page">
-    <h1>HBD TO YOU 🎂</h1>
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="150" style="margin:10px 0;">
-    <h2 id="typing-text-2"></h2>
-    <button id="btn-next-3" style="display: none;" onclick="nextPage(3)">ไปต่อกันเลย! 🚀</button>
+<h1>HBD TO YOU 🎂</h1>
+<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="130">
+<h2 id="typing-text-2"></h2>
+<button id="btn-next-3" style="display:none" onclick="nextPage(3)">ไปต่อกันเลย 🚀</button>
 </div>
 
-<!-- หน้าที่ 3 -->
+<!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1>มีความในใจอยากบอก 💌</h1>
-    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" width="140" style="margin:10px 0;">
-    <h2 id="typing-text-3"></h2>
-    <button id="btn-next-4" style="display: none;" onclick="nextPage(4)">ไปดูของขวัญ 🎁</button>
+<h1>มีความในใจอยากบอก 💌</h1>
+<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" width="120">
+<h2 id="typing-text-3"></h2>
+<button id="btn-next-4" style="display:none" onclick="nextPage(4)">ไปดูของขวัญ 🎁</button>
 </div>
 
-<!-- หน้าที่ 4 -->
+<!-- PAGE 4 -->
 <div id="page4" class="page">
-    <h1>Happy Everyday 💐</h1>
-    <h2>ขอให้ยิ้มได้เยอะๆ ในทุกวันนะ <br>นี่คือของขวัญเล็กๆ จากพี่ 🤍</h2>
-    <button onclick="surprise()">กดเพิ่มความรัก! ❤️</button>
+<h1>Happy Everyday 💐</h1>
+<h2>ขอให้ยิ้มได้เยอะๆ ในทุกวันนะ <br>นี่คือของขวัญเล็กๆ จากพี่ 🤍</h2>
+<button onclick="surprise()">กดเพิ่มความรัก! 🤍</button>
 </div>
 
 <script>
-const photos = [
+/* โค้ด JavaScript เหมือนเดิมทุกประการ */
+let micStarted=false;
+let blown=false;
+
+async function startMicBlow(){
+if(micStarted)return;
+micStarted=true;
+try{
+const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+const mic=audioCtx.createMediaStreamSource(stream);
+const analyser=audioCtx.createAnalyser();
+analyser.fftSize=256;
+mic.connect(analyser);
+const data=new Uint8Array(analyser.frequencyBinCount);
+const THRESHOLD=18;
+const HOLD_TIME=180;
+let hold=0;
+function detect(){
+analyser.getByteFrequencyData(data);
+let volume=data.reduce((a,b)=>a+b)/data.length;
+if(volume>THRESHOLD){ hold+=16; }else{ hold=0; }
+if(!blown && hold>HOLD_TIME){
+blown=true;
+document.getElementById("flame").style.display="none";
+setTimeout(()=>{
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById("page1").classList.add("active");
+},1200);
+return;
+}
+requestAnimationFrame(detect);
+}
+detect();
+}catch(e){ alert("อนุญาตไมค์ก่อนนะ 🎤"); }
+}
+
+const photos=[
     "imgs/1.png", "imgs/2.png", "imgs/3.png", "imgs/4.png",
     "imgs/5.png", "imgs/6.png", "imgs/7.png", "imgs/8.png",
     "imgs/9.webp", "imgs/10.png", "imgs/11.png", "imgs/12.png", "imgs/13.png",
@@ -146,80 +239,72 @@ const photos = [
 const msgPage2 = "ขอให้โลกใจดีกับเธอ เหมือนที่เธอใจดีกับเรา... ขอให้มีความสุขที่สุดในโลกเลยนะ 💖";
 const msgPage3 = "ขอบคุณที่อยู่เป็นรอยยิ้มดีๆ ให้กันเสมอ ✨";
 
-function nextPage(num) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page' + num).classList.add('active');
-    
-    if(num === 2) {
-        startTyping("typing-text-2", msgPage2, "btn-next-3");
-    } else if(num === 3) {
-        startTyping("typing-text-3", msgPage3, "btn-next-4");
-    }
+function nextPage(num){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('page'+num).classList.add('active');
+if(num===2)startTyping("typing-text-2",msgPage2,"btn-next-3");
+if(num===3)startTyping("typing-text-3",msgPage3,"btn-next-4");
 }
 
-function startTyping(elementId, text, buttonId) {
-    let i = 0;
-    const textEl = document.getElementById(elementId);
-    textEl.innerHTML = "";
-    document.getElementById(buttonId).style.display = "none";
-
-    function type() {
-        if (i < text.length) {
-            textEl.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, 60);
-        } else {
-            document.getElementById(buttonId).style.display = "block";
-        }
-    }
-    type();
+function startTyping(id,text,btn){
+let i=0;
+const el=document.getElementById(id);
+el.innerHTML="";
+document.getElementById(btn).style.display="none";
+function type(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,60);
+}else{
+document.getElementById(btn).style.display="block";
+}}
+type();
 }
 
-function createItem(icon) {
-    const el = document.createElement("div");
-    el.className = "float";
-    el.innerHTML = icon;
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (Math.random() * 3 + 2) + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 5000);
+function createItem(icon){
+const el=document.createElement("div");
+el.className="float";
+el.innerHTML=icon;
+el.style.left=Math.random()*100+"vw";
+el.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),5000);
 }
 
-/* แก้ไขจุดนี้: สุ่มทั้งหัวใจและดอกไม้หล่นลงมา */
-setInterval(() => {
-    const icons = ["🌸", "❤️", "✨"];
-    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-    createItem(randomIcon);
-}, 600);
+setInterval(()=>{
+const icons=["🌸","❤️","✨","💖"];
+createItem(icons[Math.floor(Math.random()*icons.length)]);
+},600);
 
-function surprise() {
-    const audio = document.getElementById("click");
-    if (audio.paused) {
-        audio.play().catch(e => console.log("Play blocked"));
-    }
+function createSparkle(){
+const s=document.createElement("div");
+s.className="sparkle";
+s.innerHTML=["✨","💫","⭐"][Math.floor(Math.random()*3)];
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),3000);
+}
+setInterval(createSparkle,400);
 
-    // หัวใจพุ่งกระจายตอนกดปุ่ม
-    for(let i=0; i<15; i++) {
-        setTimeout(() => createItem("❤️"), i * 100);
-    }
-
-    photos.forEach((src, index) => {
-        setTimeout(() => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.className = "photo";
-            
-            const randomTop = Math.random() * 70 + 5;
-            const randomLeft = Math.random() * 70 + 5;
-            const randomRotate = Math.random() * 40 - 20;
-
-            img.style.top = randomTop + "vh";
-            img.style.left = randomLeft + "vw";
-            img.style.setProperty('--r', randomRotate + 'deg');
-
-            document.body.appendChild(img);
-        }, index * 150);
-    });
+function surprise(){
+document.getElementById("click").play().catch(()=>{});
+for(let i=0;i<15;i++){
+setTimeout(()=>createItem("❤️"),i*100);
+}
+photos.forEach((src,i)=>{
+setTimeout(()=>{
+const img=document.createElement("img");
+img.src=src;
+img.className="photo";
+// สุ่มตำแหน่งให้กระจายทั่วหน้าจอขึ้น
+img.style.top=(Math.random()*65+10)+"vh";
+img.style.left=(Math.random()*65+10)+"vw";
+img.style.setProperty('--r',(Math.random()*40-20)+'deg');
+document.body.appendChild(img);
+},i*150);
+});
 }
 </script>
 
